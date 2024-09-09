@@ -1,0 +1,6 @@
+all:
+  hosts:
+    pi-main:
+      ansible_host: pi-main.local
+    pi-worker-01:
+      ansible_host: pi-worker-01.local

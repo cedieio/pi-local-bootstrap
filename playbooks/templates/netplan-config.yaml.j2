@@ -1,0 +1,19 @@
+# templates/netplan-config.yaml.j2
+network:
+  version: 2
+  renderer: networkd
+  wifis:
+    wlan0:
+      dhcp4: no
+      addresses:
+        - {{ static_ip }}/24
+      routes:
+        - to: 0.0.0.0/0
+          via: 192.168.20.1
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 8.8.4.4
+      access-points:
+        "{{ wifi_ssid }}":
+          password: "{{ wifi_password }}"

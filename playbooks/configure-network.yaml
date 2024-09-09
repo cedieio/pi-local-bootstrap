@@ -1,0 +1,16 @@
+# playbooks/configure_network.yml
+---
+- name: Configure static IP address on Ubuntu
+  hosts: all
+  become: yes
+  vars_files:
+    - ../vars/{{ inventory_hostname }}.yaml # Load config per host
+  tasks:
+    - name: Deploy Netplan configuration
+      ansible.builtin.template:
+        src: templates/netplan-config.yaml.j2
+        dest: /etc/netplan/01-netcfg.yaml
+
+    - name: Apply Netplan configuration
+      ansible.builtin.command:
+        cmd: netplan apply

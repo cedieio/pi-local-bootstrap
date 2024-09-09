@@ -1,0 +1,18 @@
+---
+- name: Run a script on remote hosts
+  hosts: all
+  become: yes  # Use 'yes' if the script needs sudo privileges
+  tasks:
+    - name: Copy the script to the remote host
+      ansible.builtin.copy:
+        src: ./scripts/install-k8s.sh
+        dest: /tmp/install-k8s.sh
+        mode: '0755'  # Ensure the script is executable
+
+    - name: Execute the script
+      ansible.builtin.command:
+        cmd: /tmp/install-k8s.sh
+
+    - name: Initialise kubeadm control panel
+      ansible.builtin.command:
+        cmd: kubeadm init --pod-network-cidr 10.90.0.0/16
